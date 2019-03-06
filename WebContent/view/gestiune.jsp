@@ -268,21 +268,11 @@
 <!-- Form Name -->
 <legend>CATEGORY</legend>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="category_name">CATEGORY NAME</label>  
-  <div class="col-md-4">
-  <input id="category_name" name="category_name" placeholder="CATEGORY NAME" class="form-control input-md" required="" type="text">
-    
-  </div>
-</div>
-
-
 <!-- Select Basic -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="category">CATEGORY</label>
   <div class="col-md-4">
-    <select id="category" name="category" class="form-control">
+    <select id="category" name="category" required="" class="form-control">
     <option disabled selected value > -- select an option -- </option>
     <%
 	    for(Categorie c : categories){

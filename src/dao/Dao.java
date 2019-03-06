@@ -3,9 +3,6 @@ package dao;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-
 // testing for git
 public interface Dao<T> {
     
@@ -19,6 +16,6 @@ public interface Dao<T> {
      
     void delete(T t);
     
-    void getId(T t);
+
     
 }

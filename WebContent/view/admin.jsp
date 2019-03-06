@@ -91,7 +91,7 @@
 <div id="b2" class="containerTab" style="display:none;background:#034f84">
   <span onclick="this.parentElement.style.display='none'" class="closebtn">x</span>
   <h2>Create Accounts</h2>
-  <form action="admin_check.jsp" method="post">
+  <form action="../AdminController" method="post">
 <table border="0">
 	<tr><td>User name</td>
 		<td><input type="text" name="username" value="" placeholder="enter username"></td>		

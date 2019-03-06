@@ -16,7 +16,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import dao.mapper.Utilizator_mapper;
-import model.Rol;
 import model.Utilizator;
 
 public class UtilizatorDao implements Dao<Utilizator>{
@@ -116,15 +115,6 @@ public class UtilizatorDao implements Dao<Utilizator>{
 		getSession_user().close();
 		
 	}
-
-
-	@Override
-	public void getId(Utilizator user) {
-		// TODO Auto-generated method stub
-		
-		
-	}
-	
 	
 
 

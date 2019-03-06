@@ -1,10 +1,6 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
 import dao.RolDao;
-import dao.UtilizatorDao;
-import dao.mapper.Rol_mapper;
-import dao.mapper.Utilizator_mapper;
+import dao.RolUtilizatorDao;
 import info.UserInfo;
 import model.Rol;
 import model.Utilizator;
@@ -59,9 +49,7 @@ public class AdminController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		UtilizatorDao ud = new UtilizatorDao(this.getServletConfig());
 		RolDao rd = new RolDao(this.getServletConfig());
-		System.out.println(rd);
 		String action = request.getParameter("action");
 
 		UserInfo ui = new UserInfo(request.getParameter("username"),
@@ -77,7 +65,6 @@ public class AdminController extends HttpServlet {
 
 		case "Add role":
 			if (ui.getRol_name() != "") {
-				System.out.println(ui.getRol_name());
 				if (f.existRol(ui.getRol_name()) == true) {
 					System.out.println("rol existent");
 				} else {
@@ -101,17 +88,10 @@ public class AdminController extends HttpServlet {
 			if (f.checkFields(ui.getUser(), ui.getPassword(), ui.getEmail(), ui.getNume(), ui.getPrenume()) == true) {
 				if (f.passwordValidation(ui.getUser(), ui.getPassword()) == true) {
 					if (f.isValidEmailAddress(ui.getEmail()) == true) {
-						Utilizator user;
 						try {
-							user = new Utilizator(ui.getUser(),EncryptService.getHashOfString(ui.getPassword()),ui.getEmail(),ui.getNume(),ui.getPrenume());
-//							Rol r = mapper_rol.getRolId(ui.getRol());
-//							session_rol.commit();
-//							session_rol.close();
-//							mapper_user.insert(user);
-//							mapper_user.insertRolUtilizator(r.getId_rol(), user.getId_utilizator());
-//							mapper_user.insertTip("active",user.getId_utilizator());
-//							session_user.commit();
-//							session_user.close();				
+							Utilizator user = new Utilizator(ui.getUser(),EncryptService.getHashOfString(ui.getPassword()),ui.getEmail(),ui.getNume(),ui.getPrenume());
+							RolUtilizatorDao rud = new RolUtilizatorDao(this.getServletConfig());
+							rud.insertStaffAccount(ui.getRol(), user);				
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

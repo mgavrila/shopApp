@@ -17,6 +17,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import dao.mapper.Rol_mapper;
 import model.Rol;
+import model.Utilizator;
 
 public class RolDao implements Dao<Rol>{
 	
@@ -108,13 +109,5 @@ public class RolDao implements Dao<Rol>{
 		getSession_rol().commit();
 		getSession_rol().close();
 	}
-
-	@Override
-	public void getId(Rol rol) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 
 }
