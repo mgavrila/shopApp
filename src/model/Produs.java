@@ -1,7 +1,6 @@
 package model;
 
-import java.util.List;
-
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,10 +42,11 @@ public class Produs {
 	public void setNume(String nume) {
 		this.nume = nume;
 	}
-
+	
 	public int getId_prod() {
 		return id_prod;
 	}
+	
 	public void setId_prod(int id_prod) {
 		this.id_prod = id_prod;
 	}
@@ -86,11 +86,11 @@ public class Produs {
 	public void setDescriere_lunga(String descriere_lunga) {
 		this.descriere_lunga = descriere_lunga;
 	}
+	
 	@Override
 	public String toString() {
 		return "Produs [id_prod=" + id_prod + ", id_categ=" + id_categ + ", pret=" + pret + ", stoc=" + stoc
 				+ ", garantie=" + garantie + ", descriere_scurta=" + descriere_scurta + ", descriere_lunga="
 				+ descriere_lunga + "]";
 	}
-
 }

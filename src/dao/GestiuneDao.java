@@ -27,7 +27,7 @@ public class GestiuneDao {
 	private Categorie_mapper mapper_categ;
 	private Produs_mapper mapper_prod;
 	
-	//public GestiuneDao() {}
+	public GestiuneDao() {}
 	
 	public GestiuneDao(ServletConfig servletConfig) {
 		
@@ -179,33 +179,41 @@ public class GestiuneDao {
 		 return p;
 	}
 	
-public GestiuneDao() {
-		
-		Reader reader = null;
-		try {
-			reader = Resources.getResourceAsReader("config.xml");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void deleteProduct(String product) {
+		if(product != null) {
+			getMapper_prod().deleteProductByName(product);
+			getSession_prod().commit();
+			getSession_prod().close();
 		}
-		
-		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);	
-
-		SqlSession session_categ = sqlSessionFactory.openSession();
-		SqlSession session_prod = sqlSessionFactory.openSession();
-
-		session_categ.getConfiguration().addMapper(Categorie_mapper.class);
-		session_prod.getConfiguration().addMapper(Produs_mapper.class);
-		
-		setSession_categ(session_categ);
-		setSession_prod(session_prod);
-		
-		Categorie_mapper mapper_categ = session_categ.getMapper(Categorie_mapper.class);
-		Produs_mapper mapper_prod = session_prod.getMapper(Produs_mapper.class);
-		
-		setMapper_categ(mapper_categ);
-		setMapper_prod(mapper_prod);
-		
-		
 	}
+	
+//public GestiuneDao() {
+//		
+//		Reader reader = null;
+//		try {
+//			reader = Resources.getResourceAsReader("config.xml");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);	
+//
+//		SqlSession session_categ = sqlSessionFactory.openSession();
+//		SqlSession session_prod = sqlSessionFactory.openSession();
+//
+//		session_categ.getConfiguration().addMapper(Categorie_mapper.class);
+//		session_prod.getConfiguration().addMapper(Produs_mapper.class);
+//		
+//		setSession_categ(session_categ);
+//		setSession_prod(session_prod);
+//		
+//		Categorie_mapper mapper_categ = session_categ.getMapper(Categorie_mapper.class);
+//		Produs_mapper mapper_prod = session_prod.getMapper(Produs_mapper.class);
+//		
+//		setMapper_categ(mapper_categ);
+//		setMapper_prod(mapper_prod);
+//		
+//		
+//	}
 }

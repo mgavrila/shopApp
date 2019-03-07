@@ -23,7 +23,7 @@ public interface Produs_mapper {
 			+ " VALUES(#{id_categ}, #{pret}, #{stoc}, #{garantie}, #{descriere_scurta}, #{descriere_lunga}, #{nume})";
 
 	final String getProductByCategory = "SELECT * FROM produs p LEFT JOIN categorie c ON p.id_categ = c.id_categ WHERE c.nume = #{nume} ";
-
+	final String deleteProductByName = "DELETE FROM produs where nume = #{nume}";
 	
 	//*********************************SELECT MAPPERS**********************************************//
 	
@@ -75,5 +75,12 @@ public interface Produs_mapper {
 	@Insert(insertProduct)
 	@Options(useGeneratedKeys = true, keyProperty = "id_prod", keyColumn = "id_prod")
 		void insertProduct(Produs prod);
+	
+	
+	
+	//*********************************DELETE MAPPERS*********************************************//
+	@Delete(deleteProductByName)
+	void deleteProductByName(String nume);
+	
 	
 }

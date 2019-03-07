@@ -15,7 +15,7 @@ public class ProductList {
 	public ProductList() {};
 	
 	public String generateXML(ListaProduse produse) {
-		File file = new File("C:\\Users\\mihai.gavrila\\product_list.xml");
+		
 		StringBuilderWriter stringWriter = new StringBuilderWriter();
 		JAXBContext jaxbContext;
 		try {
@@ -33,9 +33,7 @@ public class ProductList {
 		System.out.println(writer);
 		return writer;
 	}
-	
-	
-	
+
 	public static void main(String[] args) {
 		ProductList pl = new ProductList();
 		GestiuneDao gd = new GestiuneDao();

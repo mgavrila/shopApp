@@ -358,7 +358,6 @@
     	var e = document.getElementById("category_selected");
     	var value = e.options[e.selectedIndex].value;
     	var text = e.options[e.selectedIndex].text;
-    	alert("This is the selected category: "+ text);
     	loadDoc(text);
  	}
     </script>
@@ -369,9 +368,9 @@
 
 <!-- Select Basic -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="product">PRODUCT</label>
+  <label class="col-md-4 control-label" for="product_categorie">PRODUCT</label>
   <div class="col-md-4">
-    <select id="product_categorie" name="product" class="form-control">
+    <select id="product_categorie" name="product_categorie" class="form-control">
     <option disabled selected value > -- select an option -- </option>  
     </select>
     <script>
@@ -393,7 +392,7 @@
 		   var table="<option disabled selected value > -- select an option -- </option> ";
 		   var x = xmlDoc.getElementsByTagName("produse");
 		   for (i = 0; i <x.length; i++) { 
-		     table += "    <option value='' > " +
+		     table += "	<option value="+x[i].getElementsByTagName("nume")[0].childNodes[0].nodeValue+">" +
 		     x[i].getElementsByTagName("nume")[0].childNodes[0].nodeValue +
 		     "</option>";
 		   }

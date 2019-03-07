@@ -19,6 +19,10 @@ public class ProductInfo {
 		this.parent_category = parent_category;
 	}
 
+	
+	public ProductInfo(String product_name) {
+		this.product_name = product_name;
+	}
 
 	public ProductInfo(String product_name, String product_price, String product_category, String quantity, String guarantee,
 			String product_description) {

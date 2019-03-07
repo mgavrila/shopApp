@@ -1,9 +1,6 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -12,19 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
 import dao.GestiuneDao;
-import dao.mapper.Categorie_mapper;
-import dao.mapper.Produs_mapper;
 import info.ProductInfo;
 import jaxb.ProductList;
 import main.ListaProduse;
-import model.Categorie;
-import model.Produs;
-import utils.Function;
 
 /**
  * Servlet implementation class GestiuneController
@@ -57,7 +45,6 @@ public class GestiuneController extends HttpServlet {
 		
 		GestiuneDao gd = new GestiuneDao(this.getServletConfig());			
 		String action = request.getParameter("action");
-		
 		String redirectURL = "view/gestiune.jsp";
 		
 		switch(action) {
@@ -107,19 +94,23 @@ public class GestiuneController extends HttpServlet {
 			
 			
 		case "getProductListAsXml":
+			PrintWriter out = response.getWriter();
 			String categorie  = request.getParameter("categorie");
 			gd.getProductByCategory(categorie);
 			response.setContentType("application/xml");
-			PrintWriter out = response.getWriter();
 			ProductList pl = new ProductList();
 			ListaProduse lp = new ListaProduse();
 			lp.setProduse(gd.getProductByCategory(categorie));
-			String result = pl.generateXML(lp);			
+			String result = pl.generateXML(lp);	
 			out.print(result);
 			System.out.println("categorie: "+ categorie + " "+result);
+			break;
 			
 		case "delete_product":
-			ProductInfo delete_product = new ProductInfo(request.getParameter("category"),request.getParameter("product"));
+			ProductInfo delete_product = new ProductInfo(request.getParameter("product_categorie"));
+			gd.deleteProduct(delete_product.getProduct_name());
+			response.sendRedirect(redirectURL);
+			break;
 			
 		}
 	}
