@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-<%@ page import="java.util.Set" %>
+<%@ page import="java.util.*" %>
 <%@ page import="model.Categorie" %>
 <%@ page import="dao.mapper.Categorie_mapper" %>
+<%@ page import="model.Produs" %>
+<%@ page import="dao.mapper.Produs_mapper" %>
 <%@ page import="java.io.*" %>
 <%@ page import="org.apache.ibatis.io.Resources"%>
 <%@ page import="org.apache.ibatis.session.SqlSession"%>
 <%@ page import="org.apache.ibatis.session.SqlSessionFactory"%>
 <%@ page import="org.apache.ibatis.session.SqlSessionFactoryBuilder"%>
-<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -49,8 +50,13 @@
 
     		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);		
     		SqlSession session_category = sqlSessionFactory.openSession();
+    		SqlSession session_prod = sqlSessionFactory.openSession();
+    		
     		session_category.getConfiguration().addMapper(Categorie_mapper.class);
+    		session_prod.getConfiguration().addMapper(Produs_mapper.class);
+    		
     		Categorie_mapper mapper = session_category.getMapper(Categorie_mapper.class); 		
+    		Produs_mapper mapper_prod = session_prod.getMapper(Produs_mapper.class);
     		
     	    Set<Categorie> categ = mapper.getParentCategory();
     	    Set<Categorie> categories = mapper.getCategories();
@@ -58,7 +64,7 @@
     	    for(Categorie c : categ){
     	    	if(c != null){
     	    		String result = c.getNume();
-    	    		System.out.println(result);
+
     %>
 	    		<option value="<%= result%>"><%= result%></option>
 	    		<%
@@ -117,7 +123,6 @@
 	    for(Categorie c : categories){
 	    	if(c != null){
 	    		String result = c.getNume();
-	    		System.out.println(result);
 	    		%>
 	    		<option value="<%= result%>"><%= result%></option>
 	    		<%
@@ -209,7 +214,6 @@
 	    for(Categorie c : categories){
 	    	if(c != null){
 	    		String result = c.getNume();
-	    		System.out.println(result);
 	    		%>
 	    		<option value="<%= result%>"><%= result%></option>
 	    		<%
@@ -231,7 +235,6 @@
 	    for(Categorie c : categ){
 	    	if(c != null){
 	    		String result = c.getNume();
-	    		System.out.println(result);
 	    		%>
 	    		<option value="<%= result%>"><%= result%></option>
 	    		<%
@@ -278,7 +281,6 @@
 	    for(Categorie c : categories){
 	    	if(c != null){
 	    		String result = c.getNume();
-	    		System.out.println(result);
 	    		%>
 	    		<option value="<%= result%>"><%= result%></option>
 	    		<%
@@ -300,7 +302,6 @@
 	    for(Categorie c : categ){
 	    	if(c != null){
 	    		String result = c.getNume();
-	    		System.out.println(result);
 	    		%>
 	    		<option value="<%= result%>"><%= result%></option>
 	    		<%
@@ -324,6 +325,96 @@
 </form>
 </div>
 
+
+
+<form class="form-horizontal" action="../GestiuneController" method="post">
+<fieldset>
+
+<button class="collapsible" onclick="openExpand();">DELETE PRODUCTS</button>
+<div class="content">
+<!-- Form Name -->
+<legend>CATEGORY</legend>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="category">CATEGORY</label>
+  <div class="col-md-4">
+    <select id="category_selected" onchange="myFunction()" name="category" required="" class="form-control" >
+    <option disabled selected value > -- select an option -- </option>
+    <%
+	    for(Categorie c : categories){
+	    	if(c != null){
+	    		String result = c.getNume();
+	    		%>
+	    		<option value="<%= result%>"><%= result%></option>
+	    		<%
+	    	}
+	    }  
+    %>
+    </select>
+    
+ 	<script>
+ 	function myFunction(){
+    	var e = document.getElementById("category_selected");
+    	var value = e.options[e.selectedIndex].value;
+    	var text = e.options[e.selectedIndex].text;
+    	alert("This is the selected category: "+ text);
+    	loadDoc(text);
+ 	}
+    </script>
+    
+<input type="hidden" name="getCategory"/>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="product">PRODUCT</label>
+  <div class="col-md-4">
+    <select id="product_categorie" name="product" class="form-control">
+    <option disabled selected value > -- select an option -- </option>  
+    </select>
+    <script>
+	   
+	   function loadDoc(text) {
+		   var xhttp = new XMLHttpRequest();
+		   xhttp.onreadystatechange = function() {
+		     if (this.readyState == 4 && this.status == 200) {
+		       xmlFunction(this);
+		     }
+		   };
+		   xhttp.open("POST", "../GestiuneController", true);
+		   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		   xhttp.send("categorie="+text+"&action=getProductListAsXml");
+		 }
+		 function xmlFunction(xml) {
+		   var i;
+		   var xmlDoc = xml.responseXML;
+		   var table="<option disabled selected value > -- select an option -- </option> ";
+		   var x = xmlDoc.getElementsByTagName("produse");
+		   for (i = 0; i <x.length; i++) { 
+		     table += "    <option value='' > " +
+		     x[i].getElementsByTagName("nume")[0].childNodes[0].nodeValue +
+		     "</option>";
+		   }
+		   document.getElementById("product_categorie").innerHTML = table;
+		 }   
+	   </script>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="deleteProduct">DELETE PRODUCT</label>
+  <div class="col-md-4">
+    <button id="deleteProduct" name="deleteProduct" class="btn btn-primary">DELETE</button>
+  </div>
+  </div>
+
+</fieldset>
+<input type="hidden" name="action" value="delete_product">
+</form>
+</div>
 
 
 </html>

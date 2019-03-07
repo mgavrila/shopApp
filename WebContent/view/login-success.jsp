@@ -13,10 +13,8 @@
   
 <p>You are successfully logged in!</p>  
 
-<%  
-Utilizator user=(Utilizator)request.getAttribute("user");  
-out.print("Welcome, "+user.getUser());  
-%>  
+<p>${user}</p>
+
 
 </body>
 </html>

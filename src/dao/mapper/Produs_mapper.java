@@ -1,5 +1,6 @@
 package dao.mapper;
 
+import java.util.List;
 import java.util.Set;
 
 import org.apache.ibatis.annotations.Delete;
@@ -21,9 +22,18 @@ public interface Produs_mapper {
 	final String insertProduct = "INSERT into produs (id_categ,pret,stoc,garantie,descriere_scurta,descriere_lunga,nume)"
 			+ " VALUES(#{id_categ}, #{pret}, #{stoc}, #{garantie}, #{descriere_scurta}, #{descriere_lunga}, #{nume})";
 
+	final String getProductByCategory = "SELECT * FROM produs p LEFT JOIN categorie c ON p.id_categ = c.id_categ WHERE c.nume = #{nume} ";
 
 	
 	//*********************************SELECT MAPPERS**********************************************//
+	
+	@Select(getProductByCategory)
+	@Results(value= {
+			@Result(property = "nume", column = "nume")
+	})
+	
+	List<Produs> getProductByCategory(String categorie);
+	
 	@Select(getAllProduct)
 	@Results(value= {
 			@Result(property = "nume", column = "nume"),

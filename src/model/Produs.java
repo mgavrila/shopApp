@@ -1,5 +1,11 @@
 package model;
 
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Produs {
 
 	private int id_prod;
@@ -24,8 +30,12 @@ public class Produs {
 		this.nume = nume;
 	}
 	
+	public Produs(String nume) {
+		this.nume = nume;
+	}
 	
 	
+	@XmlElement
 	public String getNume() {
 		return nume;
 	}

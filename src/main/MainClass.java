@@ -2,6 +2,8 @@ package main;
 import java.io.IOException;
 import java.io.Reader;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.ibatis.io.Resources;
@@ -42,8 +44,20 @@ public class MainClass {
 	     Produs_mapper mapper_produs = session_produs.getMapper(Produs_mapper.class);
 	     
 	     Categorie c = mapper_categorie.getParentCategoryByName("electrocasnice");
-	     System.out.println(c.toString());
+	//     System.out.println(c.toString());
 			
+	     List<Produs> p =  mapper_produs.getProductByCategory("d0111");
+		 System.out.println(p);
+	     
+//	     List<String> produse = new ArrayList<>();
+//	     List<Produs> p =  mapper_produs.getProductByCategory("d0111");
+//	     for(Produs prod : p) {
+//	    	 produse.add(prod.getNume());
+//	     }
+//	     for(int i = 0; i< produse.size(); i++) {
+//	    	 System.out.println(produse.get(i));
+//	     }
+	     
 /*
 			Function f = new Function();
 			Categorie c = mapper_categorie.getCategoryByName("lol");

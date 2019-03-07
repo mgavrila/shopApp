@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+ <%@page import="model.Utilizator"%>  
 <!DOCTYPE html>
 <html>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -8,6 +9,9 @@
 <!------ Include the above in your HEAD tag ---------->
 <link href="../css/product.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+	
+<body>	
 
 <div class="container">
     <h3 class="h3">Shopping products</h3>
@@ -69,4 +73,5 @@
 </div>
 <hr>
 </div>
+</body>
 </html>

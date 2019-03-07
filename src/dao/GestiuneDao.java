@@ -4,9 +4,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -23,7 +27,7 @@ public class GestiuneDao {
 	private Categorie_mapper mapper_categ;
 	private Produs_mapper mapper_prod;
 	
-	public GestiuneDao() {}
+	//public GestiuneDao() {}
 	
 	public GestiuneDao(ServletConfig servletConfig) {
 		
@@ -48,6 +52,8 @@ public class GestiuneDao {
 			
 			setMapper_categ(mapper_categ);
 			setMapper_prod(mapper_prod);
+			
+			
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -166,5 +172,40 @@ public class GestiuneDao {
 				e.printStackTrace();
 			}		
 		}
+	}
+
+	public List<Produs> getProductByCategory(String category) {
+		 List<Produs> p =  getMapper_prod().getProductByCategory(category);
+		 return p;
+	}
+	
+public GestiuneDao() {
+		
+		Reader reader = null;
+		try {
+			reader = Resources.getResourceAsReader("config.xml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);	
+
+		SqlSession session_categ = sqlSessionFactory.openSession();
+		SqlSession session_prod = sqlSessionFactory.openSession();
+
+		session_categ.getConfiguration().addMapper(Categorie_mapper.class);
+		session_prod.getConfiguration().addMapper(Produs_mapper.class);
+		
+		setSession_categ(session_categ);
+		setSession_prod(session_prod);
+		
+		Categorie_mapper mapper_categ = session_categ.getMapper(Categorie_mapper.class);
+		Produs_mapper mapper_prod = session_prod.getMapper(Produs_mapper.class);
+		
+		setMapper_categ(mapper_categ);
+		setMapper_prod(mapper_prod);
+		
+		
 	}
 }

@@ -69,6 +69,8 @@ public class AdminController extends HttpServlet {
 					System.out.println("rol existent");
 				} else {
 					rd.insertRol(newRol);
+					String redirectURL = "view/admin.jsp";
+    				response.sendRedirect(redirectURL);
 				}
 			} else {
 				System.out.println("campul rol nu poate sa fie gol");
@@ -78,6 +80,8 @@ public class AdminController extends HttpServlet {
 		case "Remove role":
 			if (ui.getRol_name() != "") {
 				 rd.deleteRol(ui.getRol_name());
+				 String redirectURL = "view/admin.jsp";
+ 				 response.sendRedirect(redirectURL);
 				System.out.println("rol removed: " + ui.getRol_name());
 			} else {
 				System.out.println("remove rol error");
@@ -91,7 +95,9 @@ public class AdminController extends HttpServlet {
 						try {
 							Utilizator user = new Utilizator(ui.getUser(),EncryptService.getHashOfString(ui.getPassword()),ui.getEmail(),ui.getNume(),ui.getPrenume());
 							RolUtilizatorDao rud = new RolUtilizatorDao(this.getServletConfig());
-							rud.insertStaffAccount(ui.getRol(), user);				
+							rud.insertStaffAccount(ui.getRol(), user);	
+							String redirectURL = "view/admin.jsp";
+		    				response.sendRedirect(redirectURL);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="category">CATEGORY</label>
+  <div class="col-md-4">
+    <select id="category_selected" onchange="myFunction()" name="category" required="" class="form-control" >
+    <option disabled selected value > -- select an option -- </option>
+    
+	    		<option value="gucci">gucci</option>
+	    		
+	    		<option value="smartphones">smartphones</option>
+	    		
+	    		<option value="s11">s11</option>
+	    		
+	    		<option value="d0111">d0111</option>
+	    		
+    </select>
+    
+ 	<script>
+ 	function myFunction(){
+    	var e = document.getElementById("category_selected");
+    	var value = e.options[e.selectedIndex].value;
+    	var text = e.options[e.selectedIndex].text;
+    	alert("This is the selected category: "+ text);
+    	//loadDoc(text);
+ 	}
+    </script>
+    
+<input type="hidden" name="getCategory"/>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="product">PRODUCT</label>
+  <div class="col-md-4">
+    <select id="product_category" name="product" class="form-control">
+    <option disabled selected value > -- select an option -- </option>
+  
+	   <script>
+	   
+	   function loadDoc(text) {
+		   var xhttp = new XMLHttpRequest();
+		   xhttp.onreadystatechange = function() {
+		     if (this.readyState == 4 && this.status == 200) {
+		       myFunction(this);
+		     }
+		   };
+		   xhttp.open("POST", "../GestiuneController", true);
+		   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		   xhttp.send("categorie="+text+"&action=getProductListAsXml");
+		   xhttp.send();
+		 }
+		 function myFunction2(xml) {
+		   var i;
+		   var xmlDoc = xml.responseXML;
+		   var table="<tr><th>Artist</th><th>Title</th></tr>";
+		   var x = xmlDoc.getElementsByTagName("CD");
+		   for (i = 0; i <x.length; i++) { 
+		     table += "<tr><td>" +
+		     x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue +
+		     "</td><td>" +
+		     x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue +
+		     "</td></tr>";
+		   }
+		   document.getElementById("demo").innerHTML = table;
+		 }   
+	   </script>
+    	
+   
+    </select>
+  </div>
+</div>
+
+</body>
+</html>
